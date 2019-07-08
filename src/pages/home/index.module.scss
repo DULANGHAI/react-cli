@@ -1,0 +1,10 @@
+@import 'styles/variables';
+
+.app {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .error {
+    color: $error;
+  }
+}
