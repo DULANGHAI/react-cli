@@ -13,7 +13,7 @@ module.exports = {
         ]
       }],
     "global-require": [0],
-    // 'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     "import/prefer-default-export": [0],
     // 关闭react默认的props-type验证
     "react/prop-types": [0],

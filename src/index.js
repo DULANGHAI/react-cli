@@ -5,14 +5,12 @@ import Nav from './components/Nav';
 import getRouter from './router';
 import * as serviceWorker from './serviceWorker';
 
-import logo from './logo.svg';
 import 'antd/dist/antd.css';
 
 ReactDom.render(
   <Router>
     <Nav />
     {getRouter()}
-    <img src={logo} alt="Logo" />
   </Router>,
   document.getElementById('root')
 );
