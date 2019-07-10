@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Nav from './components/Nav';
 import getRouter from './router';
 import * as serviceWorker from './serviceWorker';
 
+// css
+import 'styles/index.scss';
 import 'antd/dist/antd.css';
 
 ReactDom.render(
   <Router>
-    <Nav />
     {getRouter()}
   </Router>,
   document.getElementById('root')

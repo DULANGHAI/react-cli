@@ -4,13 +4,18 @@ import loadable from 'react-loadable';
 import Loading from 'components/Loading';
 
 // 引入页面
-const Home = loadable({
-  loader: () => import('pages/home'),
-  loading: Loading,
-  timeout: 10000,
-});
-const Page = loadable({
-  loader: () => import('pages/page'),
+// const Home = loadable({
+//   loader: () => import('pages/home'),
+//   loading: Loading,
+//   timeout: 10000,
+// });
+// const Page = loadable({
+//   loader: () => import('pages/page'),
+//   loading: Loading,
+//   timeout: 10000,
+// });
+const UserLayout = loadable({
+  loader: () => import('layouts/UserLayout'),
   loading: Loading,
   timeout: 10000,
 });
@@ -23,8 +28,7 @@ const NotFound = loadable({
 // 路由
 const getRouter = () => (
   <Switch>
-    <Route exact path="/" component={Home} />
-    <Route path="/page" component={Page} />
+    <Route exact path="/" component={UserLayout} />
     <Route component={NotFound}></Route>
   </Switch>
 );
