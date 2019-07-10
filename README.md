@@ -27,3 +27,9 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### `修改antd主题se`
+找到文件 ./config/webpack.config.js; 大概在119行，修改你需要更改的andt主题变量
+
+主题配置项(https://ant.design/docs/react/customize-theme-cn)
+修改方法(https://juejin.im/post/5d235f82e51d45775f516aef)
+

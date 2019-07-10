@@ -5,8 +5,8 @@ import getRouter from './router';
 import * as serviceWorker from './serviceWorker';
 
 // css
+import 'antd/dist/antd.less';
 import 'styles/index.scss';
-import 'antd/dist/antd.css';
 
 ReactDom.render(
   <Router>

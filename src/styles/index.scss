@@ -1,3 +1,4 @@
+// @import 'node_modules/antd/dist/antd.less';
 @import './variables.scss';
 @import './mixin.scss';
 
@@ -101,4 +102,22 @@ div:focus {
 
 .cursor {
   cursor: pointer;
+}
+
+/* display */
+
+.df {
+    display: flex;
+}
+
+.df-wrap {
+    flex-wrap: wrap;
+}
+
+.db {
+    display: block;
+}
+
+.dib {
+    display: inline-block;
 }
