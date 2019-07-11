@@ -25,7 +25,7 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
-  reponse => {
+  response => {
     const res = response.data || {};
     const message = res.resultMessage || res.message;
     const code = res.resultCode || res.code;

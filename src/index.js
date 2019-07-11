@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import getRouter from './router';
+import Router from './router';
 import * as serviceWorker from './serviceWorker';
+
+import { Provider } from 'react-redux';
+import store from 'store';
 
 // css
 import 'antd/dist/antd.less';
 import 'styles/index.scss';
 
 ReactDom.render(
-  <Router>
-    {getRouter()}
-  </Router>,
+  <Provider store={store}>
+    <Router></Router>
+    {/* <Router history={customHistory}>
+      {getRouter()}
+    </Router> */}
+  </Provider>,
   document.getElementById('root')
 );
 

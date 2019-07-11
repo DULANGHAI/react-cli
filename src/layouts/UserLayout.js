@@ -1,10 +1,10 @@
 import React from 'react';
 import Login from 'container/Login';
 
-export default class AppContainer extends React.PureComponent {
+export default class AppContainer extends React.Component {
   render() {
     return (
-      <Login></Login>
+      <Login {...this.props}></Login>
     );
   }
 }

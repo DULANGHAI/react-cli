@@ -1,9 +1,9 @@
 import requset from 'utils/request';
 
-export function login(data) {
+export function loginApi(data) {
   return requset({
-    url: '/api/login',
+    url: '/api/api/ops/corpOperApi/login',
     method: 'post',
-    data
+    data: { loginName: 'platform', pwd: '69c7e2d683248534c173da9768dd4c33', securityCode: '666666' }
   });
 }

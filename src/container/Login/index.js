@@ -1,20 +1,47 @@
 import React, { Component } from 'react';
 import {
-  Form, Input, Button, Icon,
+  Form, Input, Button, Icon, message
 } from 'antd';
 import styles from './index.module.scss';
-
 import bg from 'assets/images/bg.jpg';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+// action
+import { loginAction } from 'actions/app';
+
+@connect(
+  state => ({}),
+  dispatch => ({
+    actions: bindActionCreators(
+      { loginAction },
+      dispatch
+    )
+  })
+)
 @Form.create()
 class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      errorMsg: '账户或密码错误',
-    };
-  }
+  state = {
+    loading: false,
+    errorMsg: '',
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        this.setState({ loading: true });
+        this.props.actions.loginAction(values).then(data => {
+          console.log('receive data: ', data);
+          setTimeout(() => this.props.history.replace('/orders'));
+          message.success('登录成功');
+        }).finally(() => {
+          this.setState({ loading: false });
+        });
+      }
+    });
+  };
 
   render() {
     const { loading, errorMsg } = this.state;
@@ -31,7 +58,11 @@ class LoginForm extends Component {
           <img className={styles.img} src={bg} alt="背景" style={{ objectFit: 'cover' }} />
         </div>
         <div className={styles.right}>
-          <Form className={styles['form-class']} hideRequiredMark={true}>
+          <Form
+            className={styles['form-class']}
+            hideRequiredMark={true}
+            onSubmit={this.handleSubmit}
+          >
             <div className={styles.title}>
               理赔垫资机构管理
             </div>
@@ -62,7 +93,7 @@ class LoginForm extends Component {
               })(<Input.Password />)}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" className={buttonClassName}>
+              <Button type="primary" htmlType="submit" className={buttonClassName}>
                 登录
               </Button>
             </Form.Item>

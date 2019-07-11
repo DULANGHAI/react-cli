@@ -1,16 +1,16 @@
-import { login } from 'api/index.js';
+import { loginApi } from 'api/index.js';
 import { message } from 'antd';
 
-export const onLogin = (params = {}) => async dispatch => {
+export const loginAction = (params = {}) => async dispatch => {
   try {
-    const data = await login(params);
+    const data = await loginApi(params);
     dispatch({
-      type: 'APP.login',
+      type: 'APP.onLogin',
       playload: data
     });
     return data;
   } catch (err) {
-    message.error('apibubuji /login 网络错误，请重试');
+    message.error('/login 网络错误，请重试');
     return null;
   }
 };
