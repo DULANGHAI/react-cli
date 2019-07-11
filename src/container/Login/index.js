@@ -34,7 +34,13 @@ class LoginForm extends Component {
         this.setState({ loading: true });
         this.props.actions.loginAction(values).then(data => {
           console.log('receive data: ', data);
-          setTimeout(() => this.props.history.replace('/orders'));
+          setTimeout(() => {
+            if (this.props.location.state) {
+              this.props.history.push(this.props.location.state.from);
+            } else {
+              this.props.history.push('/');
+            }
+          });
           message.success('登录成功');
         }).finally(() => {
           this.setState({ loading: false });

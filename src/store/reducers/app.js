@@ -1,6 +1,6 @@
 const initState = {
   token: '', // token
-  userinfo: null, // 当前用户基本信息
+  userInfo: null, // 当前用户基本信息
   menus: [
     {
       id: 1,
@@ -26,7 +26,7 @@ const onLogin = (state, { payload }) => {
 const onLogout = (state, { payload }) => {
   return Object.assign({}, state, {
     token: '',
-    userinfo: null,
+    userInfo: null,
     menus: [],
     roles: [],
     powers: []
@@ -35,7 +35,7 @@ const onLogout = (state, { payload }) => {
 
 const setUserInfo = (state, { payload }) => {
   return Object.assign({}, state, {
-    userinfo: payload.userInfo,
+    userInfo: payload.userInfo,
     menus: payload.menus,
     roles: payload.roles,
     powers: payload.powers.map(item => item.code)

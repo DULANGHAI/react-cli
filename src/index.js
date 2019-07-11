@@ -13,9 +13,6 @@ import 'styles/index.scss';
 ReactDom.render(
   <Provider store={store}>
     <Router></Router>
-    {/* <Router history={customHistory}>
-      {getRouter()}
-    </Router> */}
   </Provider>,
   document.getElementById('root')
 );
