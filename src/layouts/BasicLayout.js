@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import {
-  Layout, Menu, Icon 
-} from 'antd';
+import { Layout } from 'antd';
+import Menu from 'components/Menu';
+import HeaderContent from 'components/Header';
+import PageName from 'components/PageName';
 
 import routerConfig from 'router/routerConfig';
+import color from 'styles/variables.scss';
+import styles from './BasicLayout.module.scss';
 
 const { Header, Content, Sider } = Layout;
+
 
 class BasicLayout extends Component {
   constructor(props) {
@@ -17,32 +21,16 @@ class BasicLayout extends Component {
   render() {
     console.log(111, routerConfig);
     return (
-      <Layout>
-        <Header className="header">
-          <div className="logo" />
+      <Layout className={styles.layout}>
+        <Header className={styles['header-layout'] + ' bg-white'}>
+          <HeaderContent></HeaderContent>
         </Header>
         <Layout>
-          <Sider width={200} style={{ background: '#fff' }}>
-            <Menu
-              defaultSelectedKeys={['1']}
-              mode="inline"
-              theme="dark"
-            >
-              <Menu.Item key="1">
-                <Icon type="pie-chart" />
-                <span>Option 1</span>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <Icon type="desktop" />
-                <span>Option 2</span>
-              </Menu.Item>
-              <Menu.Item key="3">
-                <Icon type="inbox" />
-                <span>Option 3</span>
-              </Menu.Item>
-            </Menu>
+          <Sider width={240} style={{ background: color.siderbarBg }}>
+            <Menu routes={routerConfig} {...this.props}></Menu>
           </Sider>
-          <Layout style={{ padding: '0 24px 24px' }}>
+          <Layout style={{ padding: '40px 40px' }}>
+            <PageName routes={routerConfig} {...this.props}></PageName>
             <Content>
               <Switch>
                 <Redirect exact from="/" to="/home" />
