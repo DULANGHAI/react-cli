@@ -1,4 +1,5 @@
 // scss全局变量，其他文件都可以直接访问
+$theme: #4FC58B;
 $error: #FF5050; // 错误
 $pink: #FFEEEE; // 粉色，作为错误提示的背景色
 
@@ -12,6 +13,7 @@ $fontColor-3: #343434;
 $fontColor-4: #616161;
 
 :export {
+  theme: $theme;
   error: $error;
   pink: $pink;
   siderbarBg: $siderbarBg;

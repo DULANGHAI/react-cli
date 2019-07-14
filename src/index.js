@@ -6,13 +6,18 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import store from 'store';
 
+import { LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+
 // css
 import 'antd/dist/antd.less';
 import 'styles/index.scss';
 
 ReactDom.render(
   <Provider store={store}>
-    <Router></Router>
+    <LocaleProvider locale={zhCN}>
+      <Router></Router>
+    </LocaleProvider> 
   </Provider>,
   document.getElementById('root')
 );

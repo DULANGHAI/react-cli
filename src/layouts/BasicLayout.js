@@ -19,7 +19,7 @@ class BasicLayout extends Component {
   }
 
   render() {
-    console.log(111, routerConfig);
+    console.log('routerConfig', routerConfig);
     return (
       <Layout className={styles.layout}>
         <Header className={styles['header-layout'] + ' bg-white'}>
@@ -29,7 +29,7 @@ class BasicLayout extends Component {
           <Sider width={240} style={{ background: color.siderbarBg }}>
             <Menu routes={routerConfig} {...this.props}></Menu>
           </Sider>
-          <Layout style={{ padding: '40px 40px' }}>
+          <Layout style={{ padding: '40px 40px', minWidth: '1000px' }}>
             <PageName routes={routerConfig} {...this.props}></PageName>
             <Content>
               <Switch>
