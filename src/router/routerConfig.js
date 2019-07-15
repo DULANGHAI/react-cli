@@ -37,6 +37,13 @@ const routes = [
     //   },
     // ]
   },
+  {
+    key: 'adMoneyManage',
+    path: '/adMoneyManage',
+    icon: 'inbox',
+    title: '垫资管理',
+    component: () => import('pages/adMoneyManage'),
+  },
 ];
 
 
