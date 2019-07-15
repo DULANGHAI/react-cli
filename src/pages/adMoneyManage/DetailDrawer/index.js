@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Drawer, Anchor } from 'antd';
+import ApplyInfo from './ApplyInfo/index.js';
 
 import styles from './index.module.scss';
 
@@ -46,7 +47,8 @@ class DetailDrawer extends Component {
               <div id="anchor-item-3" className={styles['anchor-title']}>派单服务商</div>
               <div id="anchor-item-4" className={styles['anchor-title']}>服务商收单</div>
               <div id="anchor-item-5" className={styles['anchor-title']}>派单业务员</div>
-              <div id="anchor-item-6" className={styles['anchor-title']}>垫资申请信息与资料</div>
+              <div id="anchor-item-6"></div>
+              <ApplyInfo></ApplyInfo>
               <div id="anchor-item-7" className={styles['anchor-title']}>客户确认信息</div>
               <div id="anchor-item-8" className={styles['anchor-title']}>保险审核信息</div>
               <div id="anchor-item-9" className={styles['anchor-title']}>资金方审核信息</div>
