@@ -78,7 +78,7 @@ class LoginForm extends Component {
                 {errorMsg}
               </div>
             ) : ''}
-            <Form.Item label="账号" className={styles.flex} colon={false}>
+            <Form.Item>
               {getFieldDecorator('account', {
                 rules: [
                   {
@@ -86,9 +86,12 @@ class LoginForm extends Component {
                     message: '请输入账号',
                   },
                 ],
-              })(<Input />)}
+              })(<Input
+                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="账号"
+              />)}
             </Form.Item>
-            <Form.Item label="密码" className={styles.flex} colon={false}>
+            <Form.Item>
               {getFieldDecorator('password', {
                 rules: [
                   {
@@ -96,13 +99,19 @@ class LoginForm extends Component {
                     message: '请输入密码',
                   },
                 ],
-              })(<Input.Password />)}
+              })(<Input.Password 
+                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="密码"
+              />)}
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" className={buttonClassName}>
                 登录
               </Button>
             </Form.Item>
+            <div className={styles['forget-psw-tip']}>
+              如 <span>忘记密码</span> 请联系平台管理员
+            </div>
           </Form>
         </div>
       </div>

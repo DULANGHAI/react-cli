@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ImgShow from 'components/ImgShow/index';
 
 import commonStyles from '../common.module.scss';
 import styles from './index.module.scss';
@@ -6,17 +7,38 @@ import styles from './index.module.scss';
 class ApplyInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      test: []
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        test: [
+          {
+            uid: 0,
+            url: 'http://za-charity-tst.oss-cn-hzfinance-internal.aliyuncs.com/logo_1562294740345.png',
+            name: '公司logo'
+          },
+          {
+            uid: 1,
+            name: 'xxx.png',
+            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+          }
+        ]
+      });
+    }, 2000);
   }
 
   render() {
     return (
       <div>
         <div className={styles['anchor-title']}>垫资申请信息</div>
-        <div>
+        <div className="mar-b-30">
           <div className={commonStyles['info-item']}>
             <div className={commonStyles['item-label']}>被保险人名称</div>
-            <div className={commonStyles['item-content']}>123</div>
+            <div className={commonStyles['item-content']}>123借款人证件正反面资料借款人证件正反面资料借款人证件正反面资料借款人证件正反面资料借款人证件正反面资料借款人证件正反面资料借款人证件正反面资料借款人证件正反面资料借款人证件正反面资料</div>
           </div>
           <div className={commonStyles['info-item']}>
             <div className={commonStyles['item-label']}>出险医院</div>
@@ -93,6 +115,14 @@ class ApplyInfo extends Component {
         </div>
 
         <div className={styles['anchor-title']}>垫资申请资料</div>
+        <div className="mar-b-30">
+          <div className={commonStyles['info-item']}>
+            <div className={commonStyles['item-label']}>借款人证件正反面资料</div>
+            <div className={commonStyles['item-content']}>
+              <ImgShow data={this.state.test}></ImgShow>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

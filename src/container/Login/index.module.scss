@@ -55,6 +55,16 @@
     line-height:45px;
     margin-bottom: 90px;
   }
+  .forget-psw-tip {
+    margin-top: 14px;
+    line-height: 20px;
+    font-size: 12px;
+    span {
+      color: $fontColor-3;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
   :global {
     .ant-form-item-control-wrapper {
       flex: 1;
