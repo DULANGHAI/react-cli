@@ -11,7 +11,7 @@ import styles from './BasicLayout.module.scss';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUserInfoAction } from 'actions/app';
+import { getUserInfoAction } from 'actionCreators/app';
 
 const { Header, Content, Sider } = Layout;
 
@@ -36,49 +36,44 @@ class BasicLayout extends Component {
     this.props.actions.getUserInfoAction();
   }
 
-  goLogin = () => {
-    setTimeout(() => {
-      this.props.history.push('/login');
-    }, 500);
-  }
-
   render() {
     const { appState } = this.props;
     console.log('routerConfig', routerConfig, appState);
 
     if (!appState.token) { // token 不存在直接去登录
-      this.goLogin();
-    } else if (!appState.userInfo) { // 用户信息不存在，去获取用户信息并设置
+      return (
+        <Redirect exact from="/" to="/login" />
+      );
+    } else if (!appState.userInfo) { // token存在，但用户信息不存在，去获取用户信息并设置
       this.getUserInfo();
-    }
-
-    return (
-      <Layout className={styles.layout}>
-        {appState.userInfo ? (
-          <React.Fragment>
-            <Header className={styles['header-layout'] + ' bg-white'}>
-              <HeaderContent></HeaderContent>
-            </Header>
-            <Layout>
-              <Sider width={240} style={{ background: color.siderbarBg }}>
-                <Menu routes={routerConfig} {...this.props}></Menu>
-              </Sider>
-              <Layout style={{ padding: '40px 40px', minWidth: '1000px' }}>
-                <PageName routes={routerConfig} {...this.props}></PageName>
-                <Content>
-                  <Switch>
-                    <Redirect exact from="/" to={routerConfig[0].path} />
-                    {routerConfig.map((route, i) => (
-                      <Route {...route} {...this.props}></Route>
-                    ))}
-                  </Switch>
-                </Content>
-              </Layout>
+      return (
+        <div></div>
+      );
+    } else {
+      return (
+        <Layout className={styles.layout}>
+          <Header className={styles['header-layout'] + ' bg-white'}>
+            <HeaderContent></HeaderContent>
+          </Header>
+          <Layout>
+            <Sider width={240} style={{ background: color.siderbarBg }}>
+              <Menu routes={routerConfig} {...this.props}></Menu>
+            </Sider>
+            <Layout style={{ padding: '40px 40px', minWidth: '1000px' }}>
+              <PageName routes={routerConfig} {...this.props}></PageName>
+              <Content>
+                <Switch>
+                  <Redirect exact from="/" to={routerConfig[0].path} />
+                  {routerConfig.map((route, i) => (
+                    <Route {...route} {...this.props}></Route>
+                  ))}
+                </Switch>
+              </Content>
             </Layout>
-          </React.Fragment>
-        ) : null}
-      </Layout>
-    );
+          </Layout>
+        </Layout>
+      );
+    }
   }
 }
  

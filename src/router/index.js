@@ -8,22 +8,36 @@ import NotFound from 'pages/notFound';
 
 const customHistory = createBrowserHistory();
 
-export default class RootContainer extends React.Component {
-  render() {
-    return (
-      <Router history={customHistory}>
-        <Route
-          render={props => {
-            return (
-              <Switch>
-                <Route path="/login" component={UserLayout} />
-                <Route path="/" component={BasicLayout}></Route>
-                <Route component={NotFound}></Route>
-              </Switch>
-            );
-          }}
-        />
-      </Router>
-    );
-  }
-}
+// export default class RootContainer extends React.Component {
+//   render() {
+//     return (
+//       <Router history={customHistory}>
+//         <Route
+//           render={props => {
+//             return (
+//               <Switch>
+//                 <Route path="/login" component={UserLayout} />
+//                 <Route path="/" component={BasicLayout}></Route>
+//                 <Route component={NotFound}></Route>
+//               </Switch>
+//             );
+//           }}
+//         />
+//       </Router>
+//     );
+//   }
+// }
+
+const RootContainer = () => {
+  return (
+    <Router history={customHistory}>
+      <Switch>
+        <Route path="/login" component={UserLayout} />
+        <Route path="/" component={BasicLayout}></Route>
+        <Route component={NotFound}></Route>
+      </Switch>
+    </Router>
+  );
+};
+
+export default RootContainer;

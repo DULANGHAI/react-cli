@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { logoutAction } from 'actions/app';
+import { logoutAction } from 'actionCreators/app';
 
 import styles from './index.module.scss';
 
@@ -21,10 +21,14 @@ class MyHeader extends Component {
     this.state = { };
   }
 
+  handleLogout = () => {
+    this.props.actions.logoutAction();
+  }
+
   render() {
     const menu = (
       <Menu>
-        <Menu.Item key="0" onClick={() => this.props.actions.logoutAction()}>退出登录</Menu.Item>
+        <Menu.Item key="0" onClick={this.handleLogout}>退出登录</Menu.Item>
       </Menu>
     );
 

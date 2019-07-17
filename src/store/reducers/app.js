@@ -7,16 +7,15 @@ const initState = {
   menus: [], // 当前用户所有已授权的菜单
 };
 
-const onLogin = (state, token) => {
-  console.log('tokentokentoken', token);
-  debugger;
-  return {
-    ...state, 
-    ...{ token }
-  };
+const onLogin = (state, { token }) => {
+  console.log('1111', token);
+  let newState = JSON.parse(JSON.stringify(state));
+  newState.token = token;
+  return newState;
 };
 
 const onLogout = (state) => {
+  console.log('2222', state);
   removeToken();
   return {
     token: '',
