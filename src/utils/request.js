@@ -4,7 +4,7 @@ import { message as Message } from 'antd';
 
 // create an axios instance
 const service = axios.create({
-  baseURL: '',
+  baseURL: '/api',
   withCredentials: true,
   timeout: 15 * 1000
 });
@@ -29,7 +29,6 @@ service.interceptors.response.use(
     const res = response.data || {};
     const message = res.resultMessage || res.message;
     const code = res.resultCode || res.code;
-
     if (code !== '000000') {
       Message({
         message: message || 'Error',
@@ -42,7 +41,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error); // for debug
+    console.error('err:' + error); // for debug
     Message({
       message: error.message,
       type: 'error',

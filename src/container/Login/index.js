@@ -4,6 +4,7 @@ import {
 } from 'antd';
 import styles from './index.module.scss';
 import bg from 'assets/images/bg.jpg';
+import { encryption } from 'utils/crypto.js';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -21,26 +22,31 @@ import { loginAction } from 'actions/app';
 )
 @Form.create()
 class LoginForm extends Component {
-  state = {
-    loading: false,
-    errorMsg: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      errorMsg: '',
+    };
+  }
 
   handleSubmit = e => {
     e.preventDefault();
+    if (this.state.loading) return;
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
         this.setState({ loading: true });
-        this.props.actions.loginAction(values).then(data => {
+        this.props.actions.loginAction({
+          loginName: values.loginName,
+          loginPwd: encryption(values.loginPwd),
+        }).then(data => {
           console.log('receive data: ', data);
-          setTimeout(() => {
-            if (this.props.location.state) {
-              this.props.history.push(this.props.location.state.from);
-            } else {
-              this.props.history.push('/');
-            }
-          });
+          if (this.props.location.state) {
+            this.props.history.push(this.props.location.state.from);
+          } else {
+            this.props.history.push('/');
+          }
           message.success('登录成功');
         }).finally(() => {
           this.setState({ loading: false });
@@ -79,7 +85,7 @@ class LoginForm extends Component {
               </div>
             ) : ''}
             <Form.Item>
-              {getFieldDecorator('account', {
+              {getFieldDecorator('loginName', {
                 rules: [
                   {
                     required: true,
@@ -92,7 +98,7 @@ class LoginForm extends Component {
               />)}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('password', {
+              {getFieldDecorator('loginPwd', {
                 rules: [
                   {
                     required: true,

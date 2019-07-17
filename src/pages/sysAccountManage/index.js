@@ -33,6 +33,7 @@ class SysAccountManage extends Component {
   }
 
   componentDidMount() {
+    console.log('开始获取数据');
     this.getData();
   }
 

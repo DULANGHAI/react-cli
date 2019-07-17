@@ -1,5 +1,8 @@
+// import { getToken, setToken, removeToken, } from '@/utils/auth';
+import { getToken } from 'utils/auth';
+
 const initState = {
-  token: '', // token
+  token: getToken(), // token
   userInfo: null, // 当前用户基本信息
   menus: [
     {

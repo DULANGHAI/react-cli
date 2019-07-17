@@ -18,6 +18,10 @@ class BasicLayout extends Component {
     this.state = { };
   }
 
+  componentDidMount() {
+    console.log('basiclayout');
+  }
+
   render() {
     console.log('routerConfig', routerConfig);
     return (
@@ -33,7 +37,7 @@ class BasicLayout extends Component {
             <PageName routes={routerConfig} {...this.props}></PageName>
             <Content>
               <Switch>
-                <Redirect exact from="/" to="/home" />
+                <Redirect exact from="/" to={routerConfig[0].path} />
                 {routerConfig.map((route, i) => (
                   <Route {...route} {...this.props}></Route>
                 ))}
