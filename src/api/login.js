@@ -13,8 +13,14 @@ export function loginApi({ loginName, loginPwd }) {
 
 export function getUserInfoApi() {
   return requset({
-    url: '/api/api/ops/corpOperApi/login',
+    url: '/api/role/queryUserInfoAndMenu',
     method: 'post',
-    data: { loginName: 'platform', pwd: '69c7e2d683248534c173da9768dd4c33', securityCode: '666666' }
+  });
+}
+
+export function logoutApi() {
+  return requset({
+    url: '/api/user/logout',
+    method: 'post',
   });
 }

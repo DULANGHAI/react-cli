@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { logoutAction } from 'actions/app';
+
 import styles from './index.module.scss';
 
+@connect(
+  null,
+  dispatch => ({
+    actions: bindActionCreators(
+      { logoutAction },
+      dispatch
+    )
+  })
+)
 class MyHeader extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +24,7 @@ class MyHeader extends Component {
   render() {
     const menu = (
       <Menu>
-        <Menu.Item key="0">退出登录</Menu.Item>
+        <Menu.Item key="0" onClick={() => this.props.actions.logoutAction()}>退出登录</Menu.Item>
       </Menu>
     );
 

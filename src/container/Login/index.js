@@ -8,7 +8,6 @@ import { encryption } from 'utils/crypto.js';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// action
 import { loginAction } from 'actions/app';
 
 @connect(
@@ -35,18 +34,18 @@ class LoginForm extends Component {
     if (this.state.loading) return;
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         this.setState({ loading: true });
         this.props.actions.loginAction({
           loginName: values.loginName,
           loginPwd: encryption(values.loginPwd),
         }).then(data => {
-          console.log('receive data: ', data);
-          if (this.props.location.state) {
-            this.props.history.push(this.props.location.state.from);
-          } else {
-            this.props.history.push('/');
-          }
+          setTimeout(() => {
+            if (this.props.location.state) {
+              this.props.history.push(this.props.location.state.from);
+            } else {
+              this.props.history.push('/');
+            }
+          }, 500);
           message.success('登录成功');
         }).finally(() => {
           this.setState({ loading: false });
