@@ -30,11 +30,7 @@ service.interceptors.response.use(
     const message = res.resultMessage || res.message;
     const code = res.resultCode || res.code;
     if (code !== '000000') {
-      Message({
-        message: message || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      });
+      Message.error(message);
       return Promise.reject(new Error(res.message || 'Error'));
     } else {
       return res;
@@ -42,11 +38,7 @@ service.interceptors.response.use(
   },
   error => {
     console.log(error); // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    });
+    Message.error(error.message);
     return Promise.reject(error);
   }
 );

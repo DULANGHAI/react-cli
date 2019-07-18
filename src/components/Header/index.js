@@ -7,7 +7,9 @@ import { logoutAction } from 'actionCreators/app';
 import styles from './index.module.scss';
 
 @connect(
-  null,
+  state => ({
+    name: state.app.userInfo.name,
+  }),
   dispatch => ({
     actions: bindActionCreators(
       { logoutAction },
@@ -38,8 +40,8 @@ class MyHeader extends Component {
 
         <div className={styles['right-container']}>
           <Dropdown overlay={menu} trigger={['click']}>
-            <span className="ant-dropdown-link">
-              冰冰 <Icon type="down" />
+            <span className="ant-dropdown-link cursor">
+              {this.props.name} <Icon type="down" />
             </span>
           </Dropdown>
         </div>

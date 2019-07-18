@@ -1,22 +1,42 @@
 import React, { Component } from 'react';
-import { Modal, } from 'antd';
+import { Modal, Spin } from 'antd';
 import UserForm from './UserForm.js';
+import { getRoleApi, addUserApi, updateUserApi, } from 'api/common/sysAccountManage';
 
 const defaultFormData = {
-  userName: '',
+  name: '',
   phone: '',
   email: '',
-  account: '',
+  loginName: '',
   roleId: '',
 };
 
 class UserModal extends Component {
   state = {
+    loading: false,
     modalType: 'add',
     visible: false,
     confirmLoading: false,
     formData: defaultFormData,
+    roleData: [],
   };
+
+  componentDidMount() {
+    this.getRoleData();
+  }
+
+  getRoleData() {
+    if (this.state.loading) return;
+    this.setState({ loading: true });
+
+    getRoleApi().then(data => {
+      this.setState({
+        roleData: data.data.list,
+      });
+    }).finally(() => {
+      this.setState({ loading: false });
+    });
+  }
 
   showModal = (type, data) => {
     this.setState({
@@ -27,19 +47,27 @@ class UserModal extends Component {
   };
 
   handleOk = () => {
+    const { modalType, formData, confirmLoading } = this.state;
+    if (confirmLoading) return;
     this.userForm.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.setState({
-          confirmLoading: true,
-        });
+        this.setState({ confirmLoading: true });
         console.log('userinfo:', values);
-        setTimeout(() => {
+        let api = modalType === 'add' ? addUserApi : updateUserApi;
+        api({
+          ...values,
+          id: formData.id,
+        }).then(() => {
           this.setState({
             visible: false,
             confirmLoading: false,
+          }, () => {
+            this.userForm.props.form.setFieldsValue();
+            this.props.callback();
           });
-          this.userForm.props.form.setFieldsValue();
-        }, 2000);
+        }).catch(() => {
+          this.setState({ confirmLoading: false });
+        });
       }
     });
   };
@@ -53,7 +81,7 @@ class UserModal extends Component {
 
   render() {
     const {
-      visible, confirmLoading, modalType, formData 
+      loading, visible, confirmLoading, modalType, formData, roleData,
     } = this.state;
     return (
       <div>
@@ -64,7 +92,15 @@ class UserModal extends Component {
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
         >
-          <UserForm wrappedComponentRef={(form) => this.userForm = form} originData={formData}></UserForm>
+          <Spin spinning={loading}>
+            <UserForm
+              wrappedComponentRef={(form) => this.userForm = form}
+              originData={formData}
+              roleData={roleData}
+              modalType={modalType}
+            >
+            </UserForm>
+          </Spin>
         </Modal>
       </div>
     );

@@ -16,19 +16,24 @@ class UserForm extends Component {
 
   render() {
     const { getFieldDecorator, } = this.props.form;
-    const { originData } = this.props;
+    const { originData, roleData, modalType } = this.props;
 
     const formItemLayout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 20 },
     };
 
+    const optionNode = [];
+    roleData.forEach((item, index) => {
+      optionNode.push(<Option key={index} value={item.id}>{item.name}</Option>);
+    });
+
     return (
       <div className="">
         <Form colon={false} hideRequiredMark={true} {...formItemLayout}>
           <Form.Item label="用户名称">
-            {getFieldDecorator('userName', {
-              initialValue: originData.userName,
+            {getFieldDecorator('name', {
+              initialValue: originData.name,
               rules: [
                 {
                   required: true,
@@ -70,8 +75,8 @@ class UserForm extends Component {
             )}
           </Form.Item>
           <Form.Item label="登录账号">
-            {getFieldDecorator('account', {
-              initialValue: originData.account,
+            {getFieldDecorator('loginName', {
+              initialValue: originData.loginName,
               rules: [
                 {
                   required: true,
@@ -79,7 +84,7 @@ class UserForm extends Component {
                 },
               ],
             })(
-              <Input placeholder="请输入" />,
+              <Input placeholder="请输入" disabled={modalType !== 'add'} />,
             )}
           </Form.Item>
           <Form.Item label="系统角色">
@@ -93,9 +98,7 @@ class UserForm extends Component {
               ],
             })(
               <Select placeholder="请选择">
-                <Option value="1">角色1</Option>
-                <Option value="2">角色2</Option>
-                <Option value="3">角色3</Option>
+                {optionNode}
               </Select>,
             )}
           </Form.Item>

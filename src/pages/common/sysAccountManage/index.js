@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Button, Table, Popconfirm, Spin 
+  message, Button, Table, Popconfirm, Spin 
 } from 'antd';
 import { connect } from 'react-redux';
 import FilterForm from './FilterForm/index';
@@ -8,39 +8,25 @@ import UserModal from './UserModal/index';
 
 import styles from './index.module.scss';
 
-import { getListApi } from 'api/common/sysAccountManage';
+import { getListApi, enableUserApi, disableUserApi } from 'api/common/sysAccountManage';
 
-const data = [];
-for (let i = 0; i < 10; i++) {
-  data.push({
-    key: i,
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-    status: parseInt(Math.random(0, 1) * 2),
-  });
-}
 @connect(
   state => ({
     userInfo: state.app.userInfo,
   })
 )
 class SysAccountManage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      // pagination 配置
-      total: 0,
-      pageNum: 1,
-      pageSize: 10,
-      // 表格数据
-      data: [],
-    };
-  }
+  state = {
+    loading: false,
+    // pagination 配置
+    total: 0,
+    pageNum: 1,
+    pageSize: 10,
+    // 表格数据
+    data: [],
+  };
 
   componentDidMount() {
-    console.log('开始获取数据');
     this.getData();
   }
 
@@ -48,7 +34,7 @@ class SysAccountManage extends Component {
     return [
       {
         title: '用户名称',
-        width: 100,
+        width: 200,
         dataIndex: 'name',
         key: 'name',
         fixed: 'left',
@@ -56,57 +42,58 @@ class SysAccountManage extends Component {
       {
         title: '用户手机号',
         width: 150,
-        dataIndex: 'age',
-        key: 'age',
+        dataIndex: 'phone',
+        key: 'phone',
       },
       {
         title: '用户邮箱',
-        dataIndex: 'address',
-        key: '1',
+        dataIndex: 'email',
+        key: 'email',
         width: 150,
       },
       {
         title: '登录账号',
-        dataIndex: 'address',
-        key: '2',
+        dataIndex: 'loginName',
+        key: 'loginName',
         width: 150,
       },
       {
         title: '系统角色',
-        dataIndex: 'address',
-        key: '3',
+        dataIndex: 'roleName',
+        key: 'roleName',
         width: 150,
       },
       {
         title: '状态',
-        dataIndex: 'address',
-        key: '4',
+        dataIndex: 'status',
+        key: 'status',
         width: 150,
+        render: (text, record, index) => (record.status === 'VALID' ? <span className="theme">启用</span> : <span>停用</span>)
       },
       {
         title: '更新用户',
-        dataIndex: 'address',
-        key: '5',
+        dataIndex: 'modifier',
+        key: 'modifier',
         width: 150,
       },
       {
         title: '更新时间',
-        dataIndex: 'address',
-        key: '6',
-        width: 150,
+        dataIndex: 'gmtModified',
+        key: 'gmtModified',
+        width: 200,
       },
       {
         title: '操作',
         key: 'operation',
         fixed: 'right',
-        width: 200,
+        width: 150,
         render: (text, record, index) => {
-          const statusBtn = record.status ? (
-            <Popconfirm title="你确定要停用吗?" onConfirm={() => this.toggleStatus(record.key, 'off')}>
+          const statusBtn = record.status === 'VALID' ? (
+            <Popconfirm title="你确定要停用吗?" onConfirm={() => this.toggleStatus(record.id, 'disable')}>
               <span className="theme cursor">停用</span>
             </Popconfirm>
           ) : (
-            <Popconfirm title="你确定要启用吗?" onConfirm={() => this.toggleStatus(record.key, 'on')}>
+            <Popconfirm title="你确定要启用吗?" onConfirm={() => this.toggleStatus(record.id, 'enable')}>
               <span className="theme cursor">启用</span>
             </Popconfirm>
           );
@@ -155,21 +142,19 @@ class SysAccountManage extends Component {
   }
 
   onEdit = (data) => {
-    console.log(data);
     this.userModal.showModal('edit', {
-      userName: 'xxx',
-      phone: '123xxxx2121',
-      email: '123@qq.com',
-      account: 'aaa',
-      roleId: '2',
+      id: data.id,
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      loginName: data.loginName,
+      roleId: data.roleId,
     });
   }
 
-  getData() {
+  getData = () => {
     if (this.state.loading) return;
-    this.setState({
-      loading: true,
-    });
+    this.setState({ loading: true });
     const filterData = this.filterForm.props.form.getFieldsValue();
     const params = {
       accountType: this.props.userInfo.accountType,
@@ -178,13 +163,27 @@ class SysAccountManage extends Component {
       pageSize: this.state.pageSize,
       pageNum: this.state.pageNum
     };
-    console.log('params', params);
 
     getListApi(params).then(data => {
-      console.log('list data', data);
       this.setState({
-        data: res.data,
-        total: res.total
+        data: data.data,
+        total: data.total
+      });
+    }).finally(() => {
+      this.setState({ loading: false });
+    });
+  }
+
+  toggleStatus = (id, type) => {
+    if (this.state.loading) return;
+    this.setState({ loading: true });
+
+    let api = type === 'enable' ? enableUserApi : disableUserApi;
+    let tip = type === 'enable' ? '启用' : '停用';
+    api({ id }).then(() => {
+      this.setState({ loading: false }, () => {
+        this.getData();
+        message.success(`${tip}成功`);
       });
     }).finally(() => {
       this.setState({ loading: false });
@@ -210,7 +209,8 @@ class SysAccountManage extends Component {
           <Table
             columns={this.getColumns()}
             dataSource={data}
-            scroll={{ x: 1350 }}
+            scroll={{ x: 1450 }}
+            rowKey="id"
             pagination={{
               total: total,
               current: pageNum,
@@ -224,7 +224,7 @@ class SysAccountManage extends Component {
           />
         </Spin>
 
-        <UserModal ref={(userModal) => this.userModal = userModal}></UserModal>
+        <UserModal ref={(userModal) => this.userModal = userModal} callback={this.getData}></UserModal>
       </div>
     );
   }

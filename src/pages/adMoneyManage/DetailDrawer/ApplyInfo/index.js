@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'antd';
 import ImgShow from 'components/ImgShow/index';
 
 import commonStyles from '../common.module.scss';
@@ -118,10 +119,73 @@ class ApplyInfo extends Component {
         <div className="mar-b-30">
           <div className={commonStyles['info-item']}>
             <div className={commonStyles['item-label']}>借款人证件正反面资料</div>
-            <div className={commonStyles['item-content']}>
-              <ImgShow data={this.state.test}></ImgShow>
+            <div className={commonStyles['item-content'] + ' df'}>
+              <div className="df">
+                <ImgShow data={this.state.test}></ImgShow>
+                <div>共2张</div>
+              </div>
+              <Button type="link" icon="download" size="small">
+                下载该图片
+              </Button>
             </div>
           </div>
+
+          <div className={commonStyles['info-item']}>
+            <div className={commonStyles['item-label']}>被保险人门诊病例资料</div>
+            <div className={commonStyles['item-content'] + ' df'}>
+              <div className="df">
+                <ImgShow data={this.state.test}></ImgShow>
+                <div>共2张</div>
+              </div>
+              <Button type="link" icon="download" size="small">
+                下载该图片
+              </Button>
+            </div>
+          </div>
+
+          <div className={commonStyles['info-item']}>
+            <div className={commonStyles['item-label']}>被保人社保卡照片</div>
+            <div className={commonStyles['item-content'] + ' df'}>
+              <div className="df">
+                <ImgShow data={this.state.test}></ImgShow>
+                <div>共2张</div>
+              </div>
+              <Button type="link" icon="download" size="small">
+                下载该图片
+              </Button>
+            </div>
+          </div>
+
+          <div className={commonStyles['info-item']}>
+            <div className={commonStyles['item-label']}>医院预交金通知单</div>
+            <div className={commonStyles['item-content'] + ' df'}>
+              <div className="df">医院预交通知单.pdf</div>
+              <Button type="link" icon="download" size="small">
+                下载文件
+              </Button>
+            </div>
+          </div>
+
+          <div className={commonStyles['info-item']}>
+            <div className={commonStyles['item-label']}>入院通知单</div>
+            <div className={commonStyles['item-content'] + ' df'}>
+              <div className="df">医院预交通知单.pdf</div>
+              <Button type="link" icon="download" size="small">
+                下载文件
+              </Button>
+            </div>
+          </div>
+
+          <div className={commonStyles['info-item']}>
+            <div className={commonStyles['item-label']}>其他补充材料</div>
+            <div className={commonStyles['item-content'] + ' df'}>
+              <div className="df">医院预交通知单.pdf</div>
+              <Button type="link" icon="download" size="small">
+                下载文件
+              </Button>
+            </div>
+          </div>
+
         </div>
       </div>
     );
