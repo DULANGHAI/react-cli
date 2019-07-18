@@ -1,5 +1,5 @@
 import { loginApi, getUserInfoApi, logoutApi } from 'api/login.js';
-// import { message } from 'antd';
+import { ON_LOGIN, ON_LOGOUT, SET_USERINFO } from 'store/actionTypes/app';
 import { setToken } from 'utils/auth';
 
 export const loginAction = (params) => {
@@ -7,7 +7,7 @@ export const loginAction = (params) => {
     return loginApi(params).then(data => {
       const token = data.data.token;
       dispatch({
-        type: 'APP.onLogin',
+        type: ON_LOGIN,
         token: token,
       });
       setToken(token);
@@ -19,7 +19,7 @@ export const getUserInfoAction = () => {
   return (dispatch) => {
     return getUserInfoApi().then(data => {
       dispatch({
-        type: 'APP.setUserInfo',
+        type: SET_USERINFO,
         payload: data.data,
       });
     });
@@ -30,7 +30,7 @@ export const logoutAction = () => {
   return (dispatch) => {
     return logoutApi().then(() => {
       dispatch({
-        type: 'APP.onLogout',
+        type: ON_LOGOUT,
       });
     });
   };

@@ -1,5 +1,6 @@
 // import { getToken, setToken, removeToken, } from '@/utils/auth';
 import { getToken, removeToken } from 'utils/auth';
+import { ON_LOGIN, ON_LOGOUT, SET_USERINFO } from 'store/actionTypes/app';
 
 const initState = {
   token: getToken(), // token
@@ -7,21 +8,20 @@ const initState = {
   menus: [], // 当前用户所有已授权的菜单
 };
 
-const onLogin = (state, { token }) => {
-  console.log('1111', token);
-  let newState = JSON.parse(JSON.stringify(state));
-  newState.token = token;
+const onLogin = (state, action) => {
+  let newState = Object.assign({}, state, {
+    token: action.token
+  });
   return newState;
 };
 
-const onLogout = (state) => {
-  console.log('2222', state);
+const onLogout = (state, action) => {
   removeToken();
-  return {
+  return Object.assign({}, state, {
     token: '',
     userInfo: null,
     menus: [],
-  };
+  });
 };
 
 const setUserInfo = (state, { payload }) => {
@@ -32,16 +32,14 @@ const setUserInfo = (state, { payload }) => {
 };
 
 const reducerFn = (state = initState, action) => {
-  switch (action.type) {
-    case 'App.onLogin':
-      return onLogin(state, action);
-    case 'APP.onLogout': // 退出登录，清除用户信息
-      return onLogout(state, action);
-    case 'APP.setUserInfo': // 设置用户信息，登录成功时、同步sessionStorage中的用户信息时 触发
-      return setUserInfo(state, action);
-    default:
-      return state;
+  if (action.type === ON_LOGIN) {
+    return onLogin(state, action);
+  } else if (action.type === ON_LOGOUT) {
+    return onLogout(state, action);
+  } else if (action.type === SET_USERINFO) {
+    return setUserInfo(state, action);
   }
+  return state;
 };
 
 export default reducerFn;
