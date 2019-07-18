@@ -8,18 +8,11 @@ import Loading from 'components/Loading';
  */
 const routes = [
   {
-    key: 'home',
-    path: '/home',
-    icon: 'desktop',
-    title: 'home',
-    component: () => import('pages/home')
-  },
-  {
     key: 'sysAccountManage',
     path: '/sysAccountManage',
     icon: 'inbox',
     title: '系统账号管理',
-    component: () => import('pages/sysAccountManage'),
+    component: () => import('pages/common/sysAccountManage'),
     // routes: [
     //   {
     //     key: 'sysAccountManage-home',

@@ -27,15 +27,17 @@ class FilterForm extends Component {
         <Form colon={false} layout="inline">
           <div className="filter-form-line">
             <Form.Item label="用户名称">
-              {getFieldDecorator('username', {
+              {getFieldDecorator('name', {
                 rules: [],
+                initialValue: '',
               })(
                 <Input placeholder="请输入" />,
               )}
             </Form.Item>
             <Form.Item label="登录账号">
-              {getFieldDecorator('account', {
+              {getFieldDecorator('loginName', {
                 rules: [],
+                initialValue: '',
               })(
                 <Input placeholder="请输入" />,
               )}
@@ -43,12 +45,12 @@ class FilterForm extends Component {
             <Form.Item label="状态">
               {getFieldDecorator('status', {
                 rules: [],
-                initialValue: '1',
+                initialValue: '',
               })(
                 <Select>
-                  <Option value="1">全部</Option>
-                  <Option value="2">启用</Option>
-                  <Option value="3">停用</Option>
+                  <Option value="">全部</Option>
+                  <Option value="VALID">启用</Option>
+                  <Option value="INVALID">停用</Option>
                 </Select>,
               )}
             </Form.Item>

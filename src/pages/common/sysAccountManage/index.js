@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import {
   Button, Table, Popconfirm, Spin 
 } from 'antd';
+import { connect } from 'react-redux';
 import FilterForm from './FilterForm/index';
 import UserModal from './UserModal/index';
 
 import styles from './index.module.scss';
+
+import { getListApi } from 'api/common/sysAccountManage';
 
 const data = [];
 for (let i = 0; i < 10; i++) {
@@ -17,7 +20,11 @@ for (let i = 0; i < 10; i++) {
     status: parseInt(Math.random(0, 1) * 2),
   });
 }
-
+@connect(
+  state => ({
+    userInfo: state.app.userInfo,
+  })
+)
 class SysAccountManage extends Component {
   constructor(props) {
     super(props);
@@ -159,38 +166,29 @@ class SysAccountManage extends Component {
   }
 
   getData() {
+    if (this.state.loading) return;
     this.setState({
       loading: true,
     });
     const filterData = this.filterForm.props.form.getFieldsValue();
     const params = {
+      accountType: this.props.userInfo.accountType,
+      orgId: this.props.userInfo.orgId,
       ...filterData,
       pageSize: this.state.pageSize,
       pageNum: this.state.pageNum
     };
     console.log('params', params);
 
-    setTimeout(() => {
+    getListApi(params).then(data => {
+      console.log('list data', data);
       this.setState({
-        data: data,
-        total: 100,
-        loading: false
+        data: res.data,
+        total: res.total
       });
-    }, 1000);
-    // CommonApi.queryRepayPlan({
-    //   ...this.ruleForm,
-    //   pageSize: this.state.pageSize,
-    //   pageNum: this.state.pageNum
-    // }).then(res => {
-    //   this.setState({
-    //     data: res.data,
-    //     total: res.total
-    //   })
-    // }).finally(() => {
-    //   this.setState({
-    //     loading: false,
-    //   })
-    // })
+    }).finally(() => {
+      this.setState({ loading: false });
+    });
   }
 
   render() {
