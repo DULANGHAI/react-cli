@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Form, Input, Select, Button
+  Form, Input, Select, Button, DatePicker,
 } from 'antd';
 
 import styles from './index.module.scss';
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 @Form.create({
   name: 'filterForm'
@@ -29,28 +30,28 @@ class FilterForm extends Component {
         <Form colon={false} layout="inline" className={styles['form-class']}>
           <div className="filter-form-line">
             <Form.Item label="案件号" className={styles['labe-width-4']}>
-              {getFieldDecorator('item1', {
+              {getFieldDecorator('caseNo', {
                 rules: [],
               })(
                 <Input placeholder="请输入" />,
               )}
             </Form.Item>
             <Form.Item label="垫资号" className={styles['labe-width-4']}>
-              {getFieldDecorator('item2', {
+              {getFieldDecorator('advanceNo', {
                 rules: [],
               })(
                 <Input placeholder="请输入" />,
               )}
             </Form.Item>
             <Form.Item label="客户姓名" className={styles['labe-width-4']}>
-              {getFieldDecorator('item3', {
+              {getFieldDecorator('insuranceName', {
                 rules: [],
               })(
                 <Input placeholder="请输入" />,
               )}
             </Form.Item>
             <Form.Item label="联系人手机号" className={styles['labe-width-6']}>
-              {getFieldDecorator('item4', {
+              {getFieldDecorator('contactPhone', {
                 rules: [],
               })(
                 <Input placeholder="请输入" />,
@@ -60,50 +61,42 @@ class FilterForm extends Component {
 
           <div className="filter-form-line">
             <Form.Item label="申请时间" className={styles['labe-width-4']}>
-              {getFieldDecorator('status', {
-                rules: [],
-                initialValue: '1',
+              {getFieldDecorator('capitalApplyTime', {
+                initialValue: '',
+                rules: [
+                  { type: 'array', message: '请选择时间' }
+                ],
               })(
-                <Select>
-                  <Option value="1">全部</Option>
-                  <Option value="2">启用</Option>
-                  <Option value="3">停用</Option>
-                </Select>,
+                <RangePicker />,
               )}
             </Form.Item>
             <Form.Item label="服务商" className={styles['labe-width-4']}>
-              {getFieldDecorator('status', {
+              {getFieldDecorator('spCode', {
                 rules: [],
-                initialValue: '1',
+                initialValue: '',
               })(
                 <Select>
-                  <Option value="1">全部</Option>
-                  <Option value="2">启用</Option>
-                  <Option value="3">停用</Option>
+                  <Option value="">全部</Option>
                 </Select>,
               )}
             </Form.Item>
             <Form.Item label="业务员" className={styles['labe-width-4']}>
-              {getFieldDecorator('status', {
+              {getFieldDecorator('clerkId', {
                 rules: [],
-                initialValue: '1',
+                initialValue: '',
               })(
                 <Select>
                   <Option value="1">全部</Option>
-                  <Option value="2">启用</Option>
-                  <Option value="3">停用</Option>
                 </Select>,
               )}
             </Form.Item>
             <Form.Item label="资金方" className={styles['labe-width-6']}>
-              {getFieldDecorator('status', {
+              {getFieldDecorator('fundCode', {
                 rules: [],
-                initialValue: '1',
+                initialValue: '',
               })(
                 <Select>
-                  <Option value="1">全部</Option>
-                  <Option value="2">启用</Option>
-                  <Option value="3">停用</Option>
+                  <Option value="">全部</Option>
                 </Select>,
               )}
             </Form.Item>
@@ -111,26 +104,24 @@ class FilterForm extends Component {
 
           <div className="filter-form-line">
             <Form.Item label="垫资类型" className={styles['labe-width-4']}>
-              {getFieldDecorator('status', {
+              {getFieldDecorator('capitalType', {
                 rules: [],
-                initialValue: '1',
+                initialValue: '',
               })(
                 <Select>
-                  <Option value="1">全部</Option>
-                  <Option value="2">启用</Option>
-                  <Option value="3">停用</Option>
+                  <Option value="">全部</Option>
+                  <Option value="FIRST">首次</Option>
+                  <Option value="APPEND">追加</Option>
                 </Select>,
               )}
             </Form.Item>
             <Form.Item label="垫资状态" className={styles['labe-width-4']}>
               {getFieldDecorator('status', {
                 rules: [],
-                initialValue: '1',
+                initialValue: '',
               })(
                 <Select>
-                  <Option value="1">全部</Option>
-                  <Option value="2">启用</Option>
-                  <Option value="3">停用</Option>
+                  <Option value="">全部</Option>
                 </Select>,
               )}
             </Form.Item>

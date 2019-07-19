@@ -2,18 +2,9 @@ import React, { Component } from 'react';
 import { Table, Spin, } from 'antd';
 import FilterForm from './FilterForm/index';
 import DetailDrawer from './DetailDrawer/index.js';
-
 import styles from './index.module.scss';
 
-const data = [];
-for (let i = 0; i < 10; i++) {
-  data.push({
-    key: i,
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
+import { getListApi } from 'api/common/adMoneyManage';
 
 class AdMoneyManage extends Component {
   constructor(props) {
@@ -38,68 +29,71 @@ class AdMoneyManage extends Component {
       {
         title: '案件号',
         width: 100,
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'caseNo',
+        key: 'caseNo',
         fixed: 'left',
       },
       {
         title: '垫付号',
         width: 150,
-        dataIndex: 'age',
-        key: 'age',
+        dataIndex: 'advanceNo',
+        key: 'advanceNo',
       },
       {
         title: '保单号',
-        dataIndex: 'address',
-        key: '1',
+        dataIndex: 'policyNo',
+        key: 'policyNo',
         width: 150,
       },
       {
         title: '出险医院',
-        dataIndex: 'address',
-        key: '2',
+        dataIndex: 'hospital',
+        key: 'hospital',
         width: 150,
       },
       {
         title: '医院所属省市',
-        dataIndex: 'address',
+        dataIndex: 'hospitalProvince',
         key: '3',
         width: 150,
+        render: (text, record, index) => {
+          return record.hospitalProvince + '/' + record.hospitalCity;
+        }
       },
       {
         title: '出险原因',
-        dataIndex: 'address',
-        key: '4',
+        dataIndex: 'reason',
+        key: 'reason',
         width: 150,
       },
       {
         title: '住院时间',
-        dataIndex: 'address',
-        key: '5',
+        dataIndex: 'hospitalizationDate',
+        key: 'hospitalizationDate',
         width: 150,
       },
       {
         title: '联系人手机号',
-        dataIndex: 'address',
-        key: '6',
+        dataIndex: 'contactPhone',
+        key: 'contactPhone',
         width: 150,
       },
       {
         title: '申请时间',
-        dataIndex: 'address',
-        key: '7',
+        dataIndex: 'capitalApplyTime',
+        key: 'capitalApplyTime',
         width: 150,
       },
       {
         title: '服务商',
-        dataIndex: 'address',
-        key: '8',
+        dataIndex: 'spName',
+        key: 'spName',
         width: 150,
       },
       {
         title: '业务员',
-        dataIndex: 'address',
-        key: '9',
+        dataIndex: 'clerkName',
+        key: 'clerkName',
         width: 150,
       },
       {
@@ -110,25 +104,25 @@ class AdMoneyManage extends Component {
       },
       {
         title: '申请垫资金额（元）',
-        dataIndex: 'address',
-        key: '11',
-        width: 150,
+        dataIndex: 'capitalAmount',
+        key: 'capitalAmount',
+        width: 200,
       },
       {
         title: '垫资类型',
-        dataIndex: 'address',
-        key: '12',
+        dataIndex: 'capitalType',
+        key: 'capitalType',
         width: 150,
       },
       {
         title: '资金方',
-        dataIndex: 'address',
+        dataIndex: 'fundName',
         key: '13',
         width: 150,
       },
       {
         title: '垫资状态',
-        dataIndex: 'address',
+        dataIndex: 'status',
         key: '14',
         width: 150,
       },
@@ -148,39 +142,25 @@ class AdMoneyManage extends Component {
     ];
   }
 
-  getData() {
-    this.setState({
-      loading: true,
-    });
+  getData = () => {
+    if (this.state.loading) return;
+    this.setState({ loading: true });
     const filterData = this.filterForm.props.form.getFieldsValue();
     const params = {
       ...filterData,
+      queryType: '',
       pageSize: this.state.pageSize,
       pageNum: this.state.pageNum
     };
-    console.log('params', params);
 
-    setTimeout(() => {
+    getListApi(params).then(data => {
       this.setState({
-        data: data,
-        total: 100,
-        loading: false
+        data: data.data,
+        total: data.total
       });
-    }, 1000);
-    // CommonApi.queryRepayPlan({
-    //   ...this.ruleForm,
-    //   pageSize: this.state.pageSize,
-    //   pageNum: this.state.pageNum
-    // }).then(res => {
-    //   this.setState({
-    //     data: res.data,
-    //     total: res.total
-    //   })
-    // }).finally(() => {
-    //   this.setState({
-    //     loading: false,
-    //   })
-    // })
+    }).finally(() => {
+      this.setState({ loading: false });
+    });
   }
 
   /**
@@ -232,6 +212,7 @@ class AdMoneyManage extends Component {
             columns={this.getColumns()}
             dataSource={data}
             scroll={{ x: 2450 }}
+            rowKey="id"
             pagination={{
               total: total,
               current: pageNum,

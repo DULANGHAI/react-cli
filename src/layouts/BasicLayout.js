@@ -33,7 +33,9 @@ class BasicLayout extends Component {
   }
 
   getUserInfo = () => {
-    this.props.actions.getUserInfoAction();
+    this.props.actions.getUserInfoAction().catch((err) => {
+      console.log(err);
+    });
   }
 
   render() {

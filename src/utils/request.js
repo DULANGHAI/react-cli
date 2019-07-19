@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { getToken } from './auth';
-import { message as Message } from 'antd';
+import { Modal, message as Message } from 'antd';
+import store from 'store/index';
+import { logoutAction } from 'actionCreators/app';
+
+const { confirm } = Modal;
 
 // create an axios instance
 const service = axios.create({
@@ -30,8 +34,22 @@ service.interceptors.response.use(
     const message = res.resultMessage || res.message;
     const code = res.resultCode || res.code;
     if (code !== '000000') {
-      Message.error(message);
-      return Promise.reject(new Error(res.message || 'Error'));
+      if (code === 'TIME_OUT' && window.location.pathname.indexOf('/login') === -1) {
+        confirm({
+          title: '提示',
+          content: '您已被登出，请重新登录',
+          cancelButtonProps: {
+            hidden: true,
+          },
+          onOk() {
+            store.dispatch(logoutAction());
+          },
+          onCancel() { },
+        });
+      } else {
+        Message.error(message);
+      }
+      return Promise.reject(new Error(message || 'Error'));
     } else {
       return res;
     }

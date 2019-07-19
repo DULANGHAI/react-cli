@@ -1,3 +1,6 @@
+/**
+ * 系统账号管理
+ */
 import requset from 'utils/request';
 
 // 列表接口
