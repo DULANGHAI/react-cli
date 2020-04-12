@@ -1,6 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-<span style="color:#f03c15">Word up</span>
+<div class="panel panel-info">
+**Note**
+{: .panel-heading}
+<div class="panel-body">
+
+NOTE DESCRIPTION
+
+</div>
+</div>
 
 ## Available Scripts
 
