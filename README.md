@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ```html
 // code for coloring
-<span style="color:red;">test</span>
+<font color="#4590a3" size = "6px">文字</font>
 ```
 
 ## Available Scripts
