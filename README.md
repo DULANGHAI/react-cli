@@ -1,9 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-```html
-// code for coloring
-<font color="#4590a3" size = "6px">文字</font>
-```
+<span style="color:orange;">Word up</span>
 
 ## Available Scripts
 
