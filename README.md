@@ -1,10 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-<style>
-.alert-info {
-  color: rgb(49,112,143) !important;
-}
-</style>
+[[_TOC_]]
 
 ## Available Scripts
 
