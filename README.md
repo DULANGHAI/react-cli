@@ -1,14 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-<div class="panel panel-info">
-**Note**
-{: .panel-heading}
-<div class="panel-body">
-
-NOTE DESCRIPTION
-
-</div>
-</div>
+<style>
+.alert-info {
+  color: rgb(49,112,143) !important;
+}
+</style>
 
 ## Available Scripts
 
